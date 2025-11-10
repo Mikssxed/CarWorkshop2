@@ -1,3 +1,4 @@
+using CarWorkshop.Application.Extensions;
 using CarWorkshop.Infrastructure.Extensions;
 using CarWorkshop.Infrastructure.Persistence;
 using CarWorkshop.Infrastructure.Seeders;
@@ -7,7 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();

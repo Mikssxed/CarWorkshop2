@@ -20,4 +20,10 @@ public class CarWorkshopService : ICarWorkshopService
         carWorkshop.EncodeName();
         await _carWorkshopRepository.Create(carWorkshop);
     }
+
+    public async Task<IEnumerable<CarWorkshopDto>> GetAll()
+    {
+        var carWorkshops = await _carWorkshopRepository.GetAll();
+        return _mapper.Map<IEnumerable<CarWorkshopDto>>(carWorkshops);
+    }
 }

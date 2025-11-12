@@ -11,11 +11,9 @@ namespace CarWorkshop.Application.CarWorkshop.Commands.EditCarWorkshop
     public class EditCarWorkshopCommandHandler : IRequestHandler<EditCarWorkshopCommand>
     {
         private readonly ICarWorkshopRepository _carWorkshopRepository;
-        private readonly IMapper _mapper;
         public EditCarWorkshopCommandHandler(ICarWorkshopRepository carWorkshopRepository, IMapper mapper)
         {
             _carWorkshopRepository = carWorkshopRepository;
-            _mapper = mapper;
         }
 
         public async Task Handle(EditCarWorkshopCommand request, CancellationToken cancellationToken)

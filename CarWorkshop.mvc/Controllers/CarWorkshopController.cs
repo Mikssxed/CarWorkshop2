@@ -38,15 +38,26 @@ public class CarWorkshopController : Controller
         return View(carWorkshop);
     }
     [Route("CarWorkshop/{encodedName}/Edit")]
+    public async Task<IActionResult> Edit(string encodedName)
+    {
+        var dto = await _mediator.Send(new GetCarWorkshopByEncodedNameQuery(encodedName));
+
+        EditCarWorkshopCommand model = _mapper.Map<EditCarWorkshopCommand>(dto);
+
+        return View(model);
+    }
+
+    [HttpPost]
+    [Route("CarWorkshop/{encodedName}/Edit")]
     public async Task<IActionResult> Edit(string encodedName, EditCarWorkshopCommand command)
     {
         if (!ModelState.IsValid)
         {
             return View(command);
+
         }
-        var carWorkshop = await _mediator.Send(new GetCarWorkshopByEncodedNameQuery(encodedName));
-        var model = _mapper.Map<EditCarWorkshopCommand>(carWorkshop);
-        return View(model);
+        await _mediator.Send(command);
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]

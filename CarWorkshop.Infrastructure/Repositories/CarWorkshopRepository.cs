@@ -28,4 +28,21 @@ public class CarWorkshopRepository : ICarWorkshopRepository
         var carWorkshops = await _dbContext.CarWorkshops.ToListAsync();
         return carWorkshops;
     }
+
+    public async Task<Domain.Entities.CarWorkshop?> GetByEncodedName(string encodedName)
+    {
+        var exists = await _dbContext.CarWorkshops.FirstAsync(cw => cw.EncodedName == encodedName);
+        return exists;
+    }
+
+    public async Task Update(Domain.Entities.CarWorkshop carWorkshop)
+    {
+        _dbContext.CarWorkshops.Update(carWorkshop);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task Commit()
+    {
+        await _dbContext.SaveChangesAsync();
+    }
 }

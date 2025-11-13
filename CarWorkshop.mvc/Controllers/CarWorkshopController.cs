@@ -31,6 +31,7 @@ public class CarWorkshopController : Controller
     {
         return View();
     }
+    
     [Route("CarWorkshop/{encodedName}/Details")]
     public async Task<IActionResult> Details(string encodedName)
     {

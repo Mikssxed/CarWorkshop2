@@ -1,4 +1,6 @@
-﻿using CarWorkshop.Application.CarWorkshop;
+﻿using AutoMapper;
+using CarWorkshop.Application.ApplicationUser;
+using CarWorkshop.Application.CarWorkshop;
 using CarWorkshop.Application.CarWorkshop.Commands.CreateCarWorkshop;
 using CarWorkshop.Application.CarWorkshop.Commands.EditCarWorkshop;
 using CarWorkshop.Application.Mappings;
@@ -12,7 +14,15 @@ public static class ServiceCollectionExtensions
 {
     public static void AddApplication(this IServiceCollection services)
     {
+        services.AddScoped<IUserContext, UserContext>();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCarWorkshopCommand).Assembly));
+
+        services.AddScoped(provider => new MapperConfiguration(cfg =>
+        {
+            var scope = provider.CreateScope();
+            var userContext = scope.ServiceProvider.GetRequiredService<IUserContext>();
+            cfg.AddProfile(new CarWorkshopMappingProfile(userContext));
+        }).CreateMapper());
 
         services.AddAutoMapper(typeof(CarWorkshopMappingProfile));
 

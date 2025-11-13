@@ -19,6 +19,7 @@ public static class ServiceCollectionExtension
         });
 
         services.AddDefaultIdentity<IdentityUser>()
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<CarWorkshopDbContext>();
 
         services.AddScoped<CarWorkshopSeeder>();
